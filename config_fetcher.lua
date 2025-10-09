@@ -533,7 +533,8 @@ if #configs > 0 then
     ngx.header["Content-Disposition"] = 'attachment; filename="' .. ngx.var.sub_id .. '.txt"'
     ngx.header["Profile-Update-Interval"] = "12"
     -- Encode subscription title as base64 like 3x-ui does
-    local profile_name = "Combined Subscription - " .. ngx.var.sub_id
+    local profile_title_prefix = os.getenv("PROFILE_TITLE_PREFIX") or "Combined Subscription"
+    local profile_name = profile_title_prefix .. " - " .. ngx.var.sub_id
     ngx.header["Profile-Title"] = "base64:" .. ngx.encode_base64(profile_name)
     ngx.header["Profile-Web-Page-Url"] = "https://" .. (os.getenv("SITE_HOST") or "localhost")
     
