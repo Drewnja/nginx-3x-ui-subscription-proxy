@@ -79,8 +79,16 @@ local function generate_combined_ui(combined_data, sub_id)
         protocol = "https"
     end
     
-    -- For Cloudflare tunnels, don't include port in the URL
-    local combined_url = protocol .. "://" .. site_host .. "/sub/" .. sub_id
+    -- Build URL with port
+    local combined_url = protocol .. "://" .. site_host
+    
+    -- Always add port explicitly to ensure it's included
+    -- Only skip port if it's the default for the protocol
+    if not ((protocol == "https" and site_port == "443") or (protocol == "http" and site_port == "80")) then
+        combined_url = combined_url .. ":" .. site_port
+    end
+    
+    combined_url = combined_url .. "/sub/" .. sub_id
     
     -- Use data from first server as primary, but combine totals
     local primary_data = combined_data[1] or {}
