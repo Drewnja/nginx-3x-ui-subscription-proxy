@@ -1,5 +1,9 @@
 worker_processes 1;
 env SERVERS;
+env SITE_HOST;
+env SITE_PORT;
+env TLS_MODE;
+env PROFILE_TITLE_PREFIX;
 events {
     worker_connections 1024;
 }
